@@ -32,7 +32,12 @@ public class CreateGraphFromR {
             while ((line = reader.readLine()) != null) {
              rows.add(line);
             }
-            System.out.println(rows.get(0));
+            StringTokenizer genes= new StringTokenizer(rows.get(0),",");
+            List <String>geneNames= new <String>ArrayList();
+            while(genes.hasMoreTokens()){
+                geneNames.add(genes.nextToken());
+            }
+            System.out.println(geneNames.size());
             
             out.close();
         }
