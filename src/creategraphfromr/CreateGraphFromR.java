@@ -23,14 +23,17 @@ public class CreateGraphFromR {
     public static void main(String[] args) {
         try{
             System.out.println(System.getProperty("user.dir"));
+            List <String>rows= new <String>ArrayList();
             File newFile=new File("graph_output.csv");
             FileReader fileReader=new FileReader(newFile);
             BufferedReader reader=new BufferedReader(fileReader);
             String line = null;
             PrintWriter out= new PrintWriter(new FileWriter("gephi_graph.dl"));
             while ((line = reader.readLine()) != null) {
-             System.out.println(line);
+             rows.add(line);
             }
+            System.out.println(rows.get(0));
+            
             out.close();
         }
         catch(Exception E){
