@@ -18,6 +18,7 @@ public class node {
     List <edge>edges=new <edge>ArrayList();
     List <node>parents=new <node>ArrayList();
     List <node>children=new <node>ArrayList();
+    boolean painted=false;
     
     public node(String value){
         this.nodeName=value;
@@ -50,6 +51,14 @@ public class node {
     
     public String getNodeName(){
         return nodeName;
+    }
+    
+    public boolean isPainted(){
+        return painted;
+    }
+    
+    public void paint(){
+        this.painted=true;
     }
     
 }

@@ -27,6 +27,9 @@ public class edge {
         this.parent.addEdge(this);
         this.child.addEdge(this);
         this.alledges.add(this);
+        //Painting Nodes to show they have been already used to form an edge
+        this.parent.paint();
+        this.child.paint();
     }
     
     public node getParent(){

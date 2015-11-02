@@ -29,15 +29,47 @@ public class CreateGraphFromR {
             BufferedReader reader=new BufferedReader(fileReader);
             String line = null;
             PrintWriter out= new PrintWriter(new FileWriter("gephi_graph.dl"));
+            
             while ((line = reader.readLine()) != null) {
              rows.add(line);
             }
+            
             StringTokenizer genes= new StringTokenizer(rows.get(0),",");
-            List <String>geneNames= new <String>ArrayList();
+            node[] nodes=new node[genes.countTokens()];
+            int count=0;
+            
             while(genes.hasMoreTokens()){
-                geneNames.add(genes.nextToken());
+                String geneName=genes.nextToken();
+                node n=new node(geneName);
+                nodes[count++]=n;
             }
-            System.out.println(geneNames.size());
+            
+            List <edge>edges=new <edge>ArrayList();
+            
+            for(int i=1;i<rows.size();i++){
+                
+               StringTokenizer values=new StringTokenizer(rows.get(i),",");
+               int indexNumber=Integer.parseInt(values.nextToken());
+               for(int j=0;j<values.countTokens();j++){
+                   double value=Double.parseDouble(values.nextToken());
+                   if(value!=0.0){
+                       edge e=new edge(nodes[indexNumber],nodes[j],value);
+                       edges.add(e);
+                   }
+               }
+            }
+            
+            count=0;
+            for(node n: nodes){
+                if(n.isPainted()){
+                    count++;
+                }
+            }
+            
+            System.out.println("Number of Nodes in the Graph:");
+            System.out.println(count);
+            System.out.println("Number of edges between these nodes:");
+            System.out.println(edges.size());
             
             out.close();
         }
