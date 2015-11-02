@@ -24,7 +24,7 @@ public class CreateGraphFromR {
         try{
             System.out.println(System.getProperty("user.dir"));
             List <String>rows= new <String>ArrayList();
-            File newFile=new File("graph_output.csv");
+            File newFile=new File("test.csv");
             FileReader fileReader=new FileReader(newFile);
             BufferedReader reader=new BufferedReader(fileReader);
             String line = null;
@@ -34,7 +34,7 @@ public class CreateGraphFromR {
              rows.add(line);
             }
             
-            StringTokenizer genes= new StringTokenizer(rows.get(0),",");
+            StringTokenizer genes= new StringTokenizer(rows.get(0),";");
             node[] nodes=new node[genes.countTokens()];
             int count=0;
             
@@ -48,7 +48,7 @@ public class CreateGraphFromR {
             
             for(int i=1;i<rows.size();i++){
                 
-               StringTokenizer values=new StringTokenizer(rows.get(i),",");
+               StringTokenizer values=new StringTokenizer(rows.get(i),";");
                int indexNumber=Integer.parseInt(values.nextToken());
                for(int j=0;j<values.countTokens();j++){
                    double value=Double.parseDouble(values.nextToken());
