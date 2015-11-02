@@ -59,17 +59,22 @@ public class CreateGraphFromR {
                }
             }
             
-            count=0;
-            for(node n: nodes){
-                if(n.isPainted()){
-                    count++;
-                }
-            }
+            int numberOfPaintedNodes=0;
+            for(node n:nodes)
+                if(n.isPainted())
+                    numberOfPaintedNodes++;
+            //Printing out file in UCINET DL format for visualization using Gephi
+            out.println("dl");
+            out.println("format = edgelist1");
+            out.print("n = ");
+            out.println(numberOfPaintedNodes);
+            out.println("labels embedded:");
+            out.println("data:");
             
-            System.out.println("Number of Nodes in the Graph:");
-            System.out.println(count);
-            System.out.println("Number of edges between these nodes:");
-            System.out.println(edges.size());
+            for(edge e:edges){
+                out.print(e.getParent().getNodeName()+" "+e.getChild().getNodeName()+" ");
+                out.println(e.getWeight());
+            }
             
             out.close();
         }
