@@ -22,16 +22,20 @@ public class CreateGraphFromR {
 
     public static void main(String[] args) {
         
-        
+            //Reading file created from R Script in repository https://bitbucket.org/kanishkasthana/mouseneuronproject
+            //Input mouse single cell neuronal gene expression data comes from: http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE60361
             List <String>rows=readLinesFromFile("graph_output.csv");
             
-            //Creating Edges and Nodes in graph
+            //Creating Edges and Nodes in Gaussian Graph
             List nodesAndEdges=getNodesAndEdges(rows);
-            
+        
             node[] nodes=(node[])nodesAndEdges.get(0);
             List <edge> edges=(List<edge>)nodesAndEdges.get(1);
             
+            //Reading File of Mapped Go terms generated from http://go.princeton.edu/cgi-bin/GOTermMapper using all genes from expression Data matrix
             List <String>mappedGoTermLines=readLinesFromFile("5246_slimTerms.txt");
+            
+            List<goTerm> goTerms=getGenesAssociatedWithEachGoTerm(mappedGoTermLines);
             
             printGraphIn_UNICET_DL_Format(nodes,edges,"gephi_graph.dl");
             
@@ -117,6 +121,12 @@ public class CreateGraphFromR {
       
         return nodesAndEdges;
       
+    }
+    
+    public static List<goTerm> getGenesAssociatedWithEachGoTerm(List <String> lines){
+        List<goTerm> goTerms= new ArrayList<goTerm>();
+        
+        return goTerms;
     }
 
 
