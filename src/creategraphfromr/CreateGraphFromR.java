@@ -26,30 +26,12 @@ public class CreateGraphFromR {
             List <String>rows=readLinesFromFile("graph_output.csv");
             
             //Creating Edges and Nodes in graph
-            StringTokenizer genes= new StringTokenizer(rows.get(0),",");
-            node[] nodes=new node[genes.countTokens()];
-            int count=0;
+            List nodesAndEdges=getNodesAndEdges(rows);
             
-            while(genes.hasMoreTokens()){
-                String geneName=genes.nextToken();
-                node n=new node(geneName);
-                nodes[count++]=n;
-            }
+            node[] nodes=(node[])nodesAndEdges.get(0);
+            List <edge> edges=(List<edge>)nodesAndEdges.get(1);
             
-            List <edge>edges=new <edge>ArrayList();
-            
-            for(int i=1;i<rows.size();i++){
-                
-               StringTokenizer values=new StringTokenizer(rows.get(i),",");
-               int indexNumber=Integer.parseInt(values.nextToken());
-               for(int j=0;j<values.countTokens();j++){
-                   double value=Double.parseDouble(values.nextToken());
-                   if(value!=0.0){
-                       edge e=new edge(nodes[indexNumber],nodes[j],value);
-                       edges.add(e);
-                   }
-               }
-            }
+            List <String>mappedGoTermLines=readLinesFromFile("5246_slimTerms.txt");
             
             printGraphIn_UNICET_DL_Format(nodes,edges,"gephi_graph.dl");
             
@@ -71,6 +53,7 @@ public class CreateGraphFromR {
         catch(Exception E){
             E.printStackTrace();
         }
+        System.out.println("Read Lines successfully from file : "+fileName);
         return rows;
     }
     
@@ -99,6 +82,41 @@ public class CreateGraphFromR {
         catch(Exception e){
             e.printStackTrace();
         }
+    }
+    
+    public static List getNodesAndEdges(List<String> rows){
+        
+        StringTokenizer genes= new StringTokenizer(rows.get(0),",");
+        node[] nodes=new node[genes.countTokens()];
+        int count=0;
+            
+        while(genes.hasMoreTokens()){
+            String geneName=genes.nextToken();
+            node n=new node(geneName);
+            nodes[count++]=n;
+        }
+            
+        List <edge>edges=new <edge>ArrayList();
+            
+        for(int i=1;i<rows.size();i++){
+                
+            StringTokenizer values=new StringTokenizer(rows.get(i),",");
+            int indexNumber=Integer.parseInt(values.nextToken());
+            for(int j=0;j<values.countTokens();j++){
+                double value=Double.parseDouble(values.nextToken());
+                if(value!=0.0){
+                    edge e=new edge(nodes[indexNumber],nodes[j],value);
+                    edges.add(e);
+                }
+            }
+        }
+        
+        List nodesAndEdges=new ArrayList();
+        nodesAndEdges.add(nodes);
+        nodesAndEdges.add(edges);
+      
+        return nodesAndEdges;
+      
     }
 
 
