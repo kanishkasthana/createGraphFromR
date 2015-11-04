@@ -13,7 +13,7 @@ import java.util.*;
  * @author kanis_000
  */
 public class node {
-    public static List<node> allnodes=new <node>ArrayList();
+    public static List<node> allnodes=new ArrayList<node>();
     String nodeName;
     List <edge>edges=new <edge>ArrayList();
     List <node>parents=new <node>ArrayList();

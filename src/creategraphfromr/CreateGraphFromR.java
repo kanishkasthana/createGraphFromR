@@ -35,7 +35,7 @@ public class CreateGraphFromR {
             //Reading File of Mapped Go terms generated from http://go.princeton.edu/cgi-bin/GOTermMapper using all genes from expression Data matrix
             List <String>mappedGoTermLines=readLinesFromFile("5246_slimTerms.txt");
             
-            List<goTerm> goTerms=getGenesAssociatedWithEachGoTerm(mappedGoTermLines);
+            List<goTerm> goTerms=goTerm.getGenesAssociatedWithEachGoTerm(mappedGoTermLines);
             
             printGraphIn_UNICET_DL_Format(nodes,edges,"gephi_graph.dl");
             
@@ -123,11 +123,6 @@ public class CreateGraphFromR {
       
     }
     
-    public static List<goTerm> getGenesAssociatedWithEachGoTerm(List <String> lines){
-        List<goTerm> goTerms= new ArrayList<goTerm>();
-        
-        return goTerms;
-    }
 
 
 }

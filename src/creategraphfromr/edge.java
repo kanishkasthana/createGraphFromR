@@ -13,7 +13,7 @@ import java.util.*;
  * @author kanis_000
  */
 public class edge {
-    public static List <edge> alledges=new <edge>ArrayList();
+    public static List <edge> alledges=new ArrayList<edge>();
     node parent;
     node child;
     double weight;

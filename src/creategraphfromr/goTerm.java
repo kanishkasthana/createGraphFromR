@@ -14,14 +14,22 @@ import java.lang.*;
  * @author kanis_000
  */
 public class goTerm {
+    public static List<goTerm> allGoTerms=new ArrayList<goTerm>();
     List <String>geneNames=new <String>ArrayList();
     String goTermName;
         
     public goTerm(String goTermName){
         this.goTermName=goTermName;
+        allGoTerms.add(this);
     }
     
     public List<String> getGeneNames(){
         return geneNames;
+    }
+    
+    public static List<goTerm> getGenesAssociatedWithEachGoTerm(List <String> lines){
+        List<goTerm> goTerms= new ArrayList<goTerm>();
+        
+        return goTerms;
     }
 }
