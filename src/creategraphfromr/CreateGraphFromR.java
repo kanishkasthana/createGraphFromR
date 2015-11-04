@@ -21,19 +21,9 @@ public class CreateGraphFromR {
      */
 
     public static void main(String[] args) {
-        try{
-            System.out.println(System.getProperty("user.dir"));
-            List <String>rows= new <String>ArrayList();
-            File newFile=new File("graph_output.csv");
-            FileReader fileReader=new FileReader(newFile);
-            BufferedReader reader=new BufferedReader(fileReader);
-            String line = null;
-            PrintWriter out= new PrintWriter(new FileWriter("gephi_graph.dl"));
-            
-            while ((line = reader.readLine()) != null) {
-             rows.add(line);
-            }
-            
+        
+        
+            List <String>rows=readLinesFromFile("graph_output.csv");
             StringTokenizer genes= new StringTokenizer(rows.get(0),",");
             node[] nodes=new node[genes.countTokens()];
             int count=0;
@@ -59,11 +49,38 @@ public class CreateGraphFromR {
                }
             }
             
-            int numberOfPaintedNodes=0;
+            printGraphIn_UNICET_DL_Format(nodes,edges,"gephi_graph.dl");
+            
+    }
+
+    public static List<String> readLinesFromFile(String fileName){
+        List <String>rows= new <String>ArrayList();
+        try 
+        {
+            System.out.println(System.getProperty("user.dir"));
+            File newFile=new File(fileName);
+            FileReader fileReader=new FileReader(newFile);
+            BufferedReader reader=new BufferedReader(fileReader);
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+             rows.add(line);
+            }
+        }
+        catch(Exception E){
+            E.printStackTrace();
+        }
+        return rows;
+    }
+    
+    public static void printGraphIn_UNICET_DL_Format(node[] nodes, List <edge> edges,String outputFileName){
+        int numberOfPaintedNodes=0;
             for(node n:nodes)
                 if(n.isPainted())
                     numberOfPaintedNodes++;
             //Printing out file in UCINET DL format for visualization using Gephi
+            
+        try{
+            PrintWriter out= new PrintWriter(new FileWriter(outputFileName));
             out.println("dl");
             out.println("format = edgelist1");
             out.print("n = ");
@@ -75,19 +92,14 @@ public class CreateGraphFromR {
                 out.print(e.getParent().getNodeName()+" "+e.getChild().getNodeName()+" ");
                 out.println(e.getWeight());
             }
-
-        //Testing Java list features 
-            
-        List<String> list1 = new ArrayList<String>(Arrays.asList("A", "B", "C"));
-        List<String> list2 = new ArrayList<String>(Arrays.asList("B", "C", "D", "E", "F"));
-        
-        list1.removeAll(list2);
-        list1.addAll(list2);
-        System.out.println(list1);
             out.close();
         }
-        catch(Exception E){
-            E.printStackTrace();
+        catch(Exception e){
+            e.printStackTrace();
         }
     }
+
+
 }
+
+
