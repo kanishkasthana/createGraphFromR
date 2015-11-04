@@ -75,7 +75,15 @@ public class CreateGraphFromR {
                 out.print(e.getParent().getNodeName()+" "+e.getChild().getNodeName()+" ");
                 out.println(e.getWeight());
             }
+
+        //Testing Java list features 
             
+        List<String> list1 = new ArrayList<String>(Arrays.asList("A", "B", "C"));
+        List<String> list2 = new ArrayList<String>(Arrays.asList("B", "C", "D", "E", "F"));
+        
+        list1.removeAll(list2);
+        list1.addAll(list2);
+        System.out.println(list1);
             out.close();
         }
         catch(Exception E){
