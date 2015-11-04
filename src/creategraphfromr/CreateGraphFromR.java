@@ -24,6 +24,8 @@ public class CreateGraphFromR {
         
         
             List <String>rows=readLinesFromFile("graph_output.csv");
+            
+            //Creating Edges and Nodes in graph
             StringTokenizer genes= new StringTokenizer(rows.get(0),",");
             node[] nodes=new node[genes.countTokens()];
             int count=0;
