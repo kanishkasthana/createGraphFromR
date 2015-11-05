@@ -38,6 +38,11 @@ public class CreateGraphFromR {
             
             List<goTerm> goTerms=getGenesAssociatedWithEachGoTerm(mappedGoTermLines);
             
+            System.out.println(goTerms.get(0).getName());
+            for(String geneName:goTerms.get(0).getGeneNames())
+                System.out.println(geneName);
+            
+                       
             printGraphIn_UNICET_DL_Format(nodes,edges,"gephi_graph.dl");
             
     }
@@ -98,8 +103,6 @@ public class CreateGraphFromR {
         while(genes.hasMoreTokens()){
             String geneName=genes.nextToken();
             node n=new node(geneName);
-            //Adding Values to Dictionary for fast indexing later.
-            node.getNodeDict().put(geneName, count);
             nodes[count++]=n;
         }
             
@@ -130,6 +133,7 @@ public class CreateGraphFromR {
         List<goTerm> goTerms= new ArrayList<goTerm>();
         List<Integer> goTermStartPositions=new ArrayList<Integer>();
         
+        //Getting goTerms and the line numbers at which they occur
         for(int i=0;i<lines.size();i++){
             Pattern pattern = Pattern.compile("^TERM\\s");
             Matcher matcher=pattern.matcher(lines.get(i));
@@ -139,6 +143,28 @@ public class CreateGraphFromR {
                 goTerm term=new goTerm(goTermName);
                 goTerms.add(term);
             }
+        }
+        
+        //Getting Gene Names associated with each goTerm
+        int count=0;
+        for(int linePosition:goTermStartPositions){
+            String annotatedGenes=lines.get(linePosition+4);
+            Pattern pattern=Pattern.compile("^ANNOTATED_GENES\\s:\\s");
+            Matcher matcher=pattern.matcher(annotatedGenes);
+            if(matcher.find()){
+                StringTokenizer genes=new StringTokenizer(annotatedGenes.substring(matcher.end()),",");
+                while(genes.hasMoreTokens()){
+                    String geneName=genes.nextToken().trim();
+                    if(!geneName.contains("none"))
+                        goTerms.get(count).getGeneNames().add(geneName);
+                }
+                count++;
+            }
+        }
+        
+        if(count!=goTerms.size()){
+            System.out.println("ERROR! Annotated Genes list not found for all GoTerms!");
+            throw new Error();
         }
         return goTerms;
     }

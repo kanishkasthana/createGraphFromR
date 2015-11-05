@@ -15,16 +15,27 @@ import java.lang.*;
  */
 public class goTerm {
     public static List<goTerm> allGoTerms=new ArrayList<goTerm>();
+    public static HashMap<String,goTerm> goTermDict=new HashMap<String,goTerm>();
     List <node>nodes=new ArrayList<node>();
+    List <String>geneNames=new ArrayList<String>();
     String goTermName;
         
     public goTerm(String goTermName){
         this.goTermName=goTermName;
         allGoTerms.add(this);
+        goTermDict.put(goTermName, this);
     }
     
     public List<node> getNodes(){
         return nodes;
+    }
+    
+    public String getName(){
+        return goTermName;
+    }
+    
+    public List<String> getGeneNames(){
+        return geneNames;
     }
     
 }
