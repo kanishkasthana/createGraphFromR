@@ -8,6 +8,7 @@ package creategraphfromr;
 import java.io.*;
 import java.util.*;
 import java.lang.*;
+import java.util.regex.*;
 
 
 /**
@@ -35,7 +36,7 @@ public class CreateGraphFromR {
             //Reading File of Mapped Go terms generated from http://go.princeton.edu/cgi-bin/GOTermMapper using all genes from expression Data matrix
             List <String>mappedGoTermLines=readLinesFromFile("5246_slimTerms.txt");
             
-            List<goTerm> goTerms=goTerm.getGenesAssociatedWithEachGoTerm(mappedGoTermLines);
+            List<goTerm> goTerms=getGenesAssociatedWithEachGoTerm(mappedGoTermLines);
             
             printGraphIn_UNICET_DL_Format(nodes,edges,"gephi_graph.dl");
             
@@ -123,6 +124,23 @@ public class CreateGraphFromR {
       
         return nodesAndEdges;
       
+    }
+    
+    public static List<goTerm> getGenesAssociatedWithEachGoTerm(List <String> lines){
+        List<goTerm> goTerms= new ArrayList<goTerm>();
+        List<Integer> goTermStartPositions=new ArrayList<Integer>();
+        
+        for(int i=0;i<lines.size();i++){
+            Pattern pattern = Pattern.compile("^TERM\\s");
+            Matcher matcher=pattern.matcher(lines.get(i));
+            if(matcher.find()){
+                String goTermName=lines.get(i).substring(matcher.end());
+                goTermStartPositions.add(i);
+                goTerm term=new goTerm(goTermName);
+                goTerms.add(term);
+            }
+        }
+        return goTerms;
     }
     
 

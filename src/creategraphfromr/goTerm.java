@@ -15,7 +15,7 @@ import java.lang.*;
  */
 public class goTerm {
     public static List<goTerm> allGoTerms=new ArrayList<goTerm>();
-    List <String>geneNames=new <String>ArrayList();
+    List <node>nodes=new ArrayList<node>();
     String goTermName;
         
     public goTerm(String goTermName){
@@ -23,13 +23,8 @@ public class goTerm {
         allGoTerms.add(this);
     }
     
-    public List<String> getGeneNames(){
-        return geneNames;
+    public List<node> getNodes(){
+        return nodes;
     }
     
-    public static List<goTerm> getGenesAssociatedWithEachGoTerm(List <String> lines){
-        List<goTerm> goTerms= new ArrayList<goTerm>();
-        
-        return goTerms;
-    }
 }
