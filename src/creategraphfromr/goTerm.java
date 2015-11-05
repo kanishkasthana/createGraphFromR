@@ -38,4 +38,9 @@ public class goTerm {
         return geneNames;
     }
     
+    public void addGeneName(String geneName){
+        geneNames.add(geneName);
+        nodes.add(node.getNode(geneName));
+    }
+    
 }

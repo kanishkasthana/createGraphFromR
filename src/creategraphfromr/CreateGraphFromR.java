@@ -156,7 +156,7 @@ public class CreateGraphFromR {
                 while(genes.hasMoreTokens()){
                     String geneName=genes.nextToken().trim();
                     if(!geneName.contains("none"))
-                        goTerms.get(count).getGeneNames().add(geneName);
+                        goTerms.get(count).addGeneName(geneName);
                 }
                 count++;
             }
