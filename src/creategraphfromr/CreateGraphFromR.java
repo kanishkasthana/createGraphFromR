@@ -52,7 +52,7 @@ public class CreateGraphFromR {
             String line = null;
             while ((line = reader.readLine()) != null) {
              rows.add(line);
-            }
+            }     
         }
         catch(Exception E){
             E.printStackTrace();
@@ -97,6 +97,8 @@ public class CreateGraphFromR {
         while(genes.hasMoreTokens()){
             String geneName=genes.nextToken();
             node n=new node(geneName);
+            //Adding Values to Dictionary for fast indexing later.
+            node.getNodeDict().put(geneName, count);
             nodes[count++]=n;
         }
             

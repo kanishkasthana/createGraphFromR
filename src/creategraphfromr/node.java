@@ -14,6 +14,7 @@ import java.util.*;
  */
 public class node {
     public static List<node> allnodes=new ArrayList<node>();
+    public static HashMap<String,Integer> nodeDict= new HashMap<String,Integer>();
     String nodeName;
     List <edge>edges=new <edge>ArrayList();
     List <node>parents=new <node>ArrayList();
@@ -59,6 +60,10 @@ public class node {
     
     public void paint(){
         this.painted=true;
+    }
+    
+    public static HashMap<String,Integer> getNodeDict(){
+        return nodeDict;
     }
     
 }
