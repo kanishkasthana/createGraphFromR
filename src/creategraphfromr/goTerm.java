@@ -43,4 +43,8 @@ public class goTerm {
         nodes.add(node.getNode(geneName));
     }
     
+    public static goTerm getGoTerm(String goTermName){
+        return goTermDict.get(goTermName);
+    }
+    
 }

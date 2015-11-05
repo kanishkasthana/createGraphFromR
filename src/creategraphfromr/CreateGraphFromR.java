@@ -38,11 +38,14 @@ public class CreateGraphFromR {
             
             List<goTerm> goTerms=getGenesAssociatedWithEachGoTerm(mappedGoTermLines);
             
-            System.out.println(goTerms.get(0).getName());
-            for(String geneName:goTerms.get(0).getGeneNames())
-                System.out.println(geneName);
-            
-                       
+            //TO Do: change the usage of index numbers to gene Names? Do I really need to do this? No not freaking really don't do this shit.
+            //What else? Make a method to filter out the nodes and edges for the specific goTerm that you are intersted in. Also make a GUI for filtering out
+            //the goTerms dude. That would be really cool if you can manage to get that shit done dude. Cool man cool. This is freaking awesome and amazing dude.
+            //I'm getting an adrenaline rush from my current state of mind dude. It might get derailed in the future as more information becomes available because
+            //generally nothing working according to plan my friend. Damn it will be so easy for me to be mentally destabilized if that freaking happens dude. I need to collect 
+            //more freaking information about what people are doing and come up with more freaking ideas dude. This I think is really freaking important dude.
+            //I am really freaking confident about this, I am running on autonomous mode. Cool man you can do this work more man, socialize more. learn more. Learn as much as possible dude
+            //You can do this motherfucker. You can do this shit. Comeon Keep working more and more and keep doing more and more and more.
             printGraphIn_UNICET_DL_Format(nodes,edges,"gephi_graph.dl");
             
     }
