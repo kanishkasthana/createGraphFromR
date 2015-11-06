@@ -105,8 +105,10 @@ public class CreateGraphFromR {
         return nodes;
     }
     
+    //WARNING: Don't call this method if you are also calling getFilteredEdges because the nodes are painted depending on whether an edge is created or not
+    //If you call this method a larger set of nodes is painted. This will create problems when the UNICET DL graph file is generated.
     public static List<edge> getEdges(List<String> rows, node[] nodes){
-        List <edge>edges=new <edge>ArrayList();
+        List <edge>edges=new ArrayList<edge>();
  
         for(int i=1;i<rows.size();i++){
                 
@@ -122,6 +124,27 @@ public class CreateGraphFromR {
         }
         return edges;
     
+    }
+    
+    public static List<edge> getFilteredEdges(List<String> rows, node[] allNodes, List<node> filteredNodes){
+        List <edge>edges=new ArrayList<edge>();
+        
+        for(int i=1;i<rows.size();i++){
+            
+            StringTokenizer values=new StringTokenizer(rows.get(i),",");
+            int indexNumber=Integer.parseInt(values.nextToken());
+            for(int j=0;j<values.countTokens();j++){
+                double value=Double.parseDouble(values.nextToken());
+                node parent=allNodes[indexNumber];
+                node child=allNodes[j];
+                
+                if(value!=0.0 && filteredNodes.contains(child)){
+                    edge e=new edge(parent,child,value);
+                    edges.add(e);
+                }
+            }
+        }
+        return edges;
     }
     
     
