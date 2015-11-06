@@ -25,14 +25,11 @@ public class CreateGraphFromR {
         
             //Reading file created from R Script in repository https://bitbucket.org/kanishkasthana/mouseneuronproject
             //Input mouse single cell neuronal gene expression data comes from: http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE60361
-            List <String>rows=readLinesFromFile("test.csv");
+            List <String>rows=readLinesFromFile("graph_output.csv");
             
             //Creating Edges and Nodes in Gaussian Graph
             node[] nodes=getNodes(rows);
-            List<node> filteredNodes=new ArrayList<node>();
-            filteredNodes.add(node.getNode("C"));
-            filteredNodes.add(node.getNode("D"));
-            List <edge> edges=getFilteredEdges(rows,nodes,filteredNodes);
+            List <edge> edges=getEdges(rows,nodes);
             
             //Reading File of Mapped Go terms generated from http://go.princeton.edu/cgi-bin/GOTermMapper using all genes from expression Data matrix
             List <String>mappedGoTermLines=readLinesFromFile("5246_slimTerms.txt");
@@ -95,7 +92,7 @@ public class CreateGraphFromR {
     }
     
     public static node[] getNodes(List<String> rows){
-        StringTokenizer genes= new StringTokenizer(rows.get(0),";");
+        StringTokenizer genes= new StringTokenizer(rows.get(0),",");
         node[] nodes=new node[genes.countTokens()];
         int count=0;
             
@@ -115,7 +112,7 @@ public class CreateGraphFromR {
  
         for(int i=1;i<rows.size();i++){
                 
-            StringTokenizer values=new StringTokenizer(rows.get(i),";");
+            StringTokenizer values=new StringTokenizer(rows.get(i),",");
             int indexNumber=Integer.parseInt(values.nextToken());
             for(int j=0;j<values.countTokens();j++){
                 double value=Double.parseDouble(values.nextToken());
@@ -134,7 +131,7 @@ public class CreateGraphFromR {
         
         for(int i=1;i<rows.size();i++){
             
-            StringTokenizer values=new StringTokenizer(rows.get(i),";");
+            StringTokenizer values=new StringTokenizer(rows.get(i),",");
             int indexNumber=Integer.parseInt(values.nextToken());
             for(int j=0;j<values.countTokens();j++){
                 double value=Double.parseDouble(values.nextToken());
