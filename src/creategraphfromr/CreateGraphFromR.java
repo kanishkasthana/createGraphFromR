@@ -30,7 +30,7 @@ public class CreateGraphFromR {
             //Creating Edges and Nodes in Gaussian Graph
             List nodesAndEdges=getNodesAndEdges(rows);
         
-            node[] nodes=(node[])nodesAndEdges.get(0);
+            node[] nodes=getNodes(rows);
             List <edge> edges=(List<edge>)nodesAndEdges.get(1);
             
             //Reading File of Mapped Go terms generated from http://go.princeton.edu/cgi-bin/GOTermMapper using all genes from expression Data matrix
@@ -38,14 +38,10 @@ public class CreateGraphFromR {
             
             List<goTerm> goTerms=getGenesAssociatedWithEachGoTerm(mappedGoTermLines);
             
-            //TO Do: change the usage of index numbers to gene Names? Do I really need to do this? No not freaking really don't do this shit.
-            //What else? Make a method to filter out the nodes and edges for the specific goTerm that you are intersted in. Also make a GUI for filtering out
-            //the goTerms dude. That would be really cool if you can manage to get that shit done dude. Cool man cool. This is freaking awesome and amazing dude.
-            //I'm getting an adrenaline rush from my current state of mind dude. It might get derailed in the future as more information becomes available because
-            //generally nothing working according to plan my friend. Damn it will be so easy for me to be mentally destabilized if that freaking happens dude. I need to collect 
-            //more freaking information about what people are doing and come up with more freaking ideas dude. This I think is really freaking important dude.
-            //I am really freaking confident about this, I am running on autonomous mode. Cool man you can do this work more man, socialize more. learn more. Learn as much as possible dude
-            //You can do this motherfucker. You can do this shit. Comeon Keep working more and more and keep doing more and more and more.
+            List<String> filterByGoTerms=new ArrayList<String>();
+            filterByGoTerms.add("DNA binding");
+            
+            
             printGraphIn_UNICET_DL_Format(nodes,edges,"gephi_graph.dl");
             
     }
@@ -96,6 +92,40 @@ public class CreateGraphFromR {
             e.printStackTrace();
         }
     }
+    
+    public static node[] getNodes(List<String> rows){
+        StringTokenizer genes= new StringTokenizer(rows.get(0),",");
+        node[] nodes=new node[genes.countTokens()];
+        int count=0;
+            
+        while(genes.hasMoreTokens()){
+            String geneName=genes.nextToken();
+            node n=new node(geneName);
+            nodes[count++]=n;
+        }
+        
+        return nodes;
+    }
+    
+    public static List<edge> getEdges(List<String> rows, node[] nodes){
+        List <edge>edges=new <edge>ArrayList();
+            
+        for(int i=1;i<rows.size();i++){
+                
+            StringTokenizer values=new StringTokenizer(rows.get(i),",");
+            int indexNumber=Integer.parseInt(values.nextToken());
+            for(int j=0;j<values.countTokens();j++){
+                double value=Double.parseDouble(values.nextToken());
+                if(value!=0.0){
+                    edge e=new edge(nodes[indexNumber],nodes[j],value);
+                    edges.add(e);
+                }
+            }
+        }
+        return edges;
+    
+    }
+    
     
     public static List getNodesAndEdges(List<String> rows){
         
