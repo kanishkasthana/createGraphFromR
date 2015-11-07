@@ -33,7 +33,7 @@ public class CreateGraphFromR {
             List <String>mappedGoTermLines=readLinesFromFile("5246_slimTerms.txt");
             List<goTerm> goTerms=getGenesAssociatedWithEachGoTerm(mappedGoTermLines);
             List<String> filterByGoTerms=new ArrayList<String>();
-            filterByGoTerms.add("rRNA binding");
+            filterByGoTerms.add("DNA binding");
             List<node> filteredNodes=getNodesFilteredByGoTerms(filterByGoTerms);
             
             List <edge> edges=getFilteredEdges(rows,nodes,filteredNodes);
