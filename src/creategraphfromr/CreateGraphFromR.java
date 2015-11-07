@@ -26,21 +26,25 @@ public class CreateGraphFromR {
             //Reading file created from R Script in repository https://bitbucket.org/kanishkasthana/mouseneuronproject
             //Input mouse single cell neuronal gene expression data comes from: http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE60361
             List <String>rows=readLinesFromFile("graph_output.csv");
-            
-            //Creating Edges and Nodes in Gaussian Graph
+            //Creating Nodes in Gaussian Graph
             node[] nodes=getNodes(rows);
-            List <edge> edges=getEdges(rows,nodes);
             
             //Reading File of Mapped Go terms generated from http://go.princeton.edu/cgi-bin/GOTermMapper using all genes from expression Data matrix
             List <String>mappedGoTermLines=readLinesFromFile("5246_slimTerms.txt");
-            
             List<goTerm> goTerms=getGenesAssociatedWithEachGoTerm(mappedGoTermLines);
-            
             List<String> filterByGoTerms=new ArrayList<String>();
             filterByGoTerms.add("DNA binding");
+            List<node> filteredNodes=getNodesFilteredByGoTerms(filterByGoTerms);
             
-            
+            List <edge> edges=getEdges(rows,nodes);
             printGraphIn_UNICET_DL_Format(nodes,edges,"gephi_graph.dl");
+            List<Integer> test1=new ArrayList<Integer>();
+            test1.add(1);test1.add(2);test1.add(3);test1.add(4);test1.add(5);
+            List<Integer> test2=new ArrayList<Integer>();
+            test2.add(4);test2.add(5);
+            test1.retainAll(test2);
+            System.out.println(test1);
+            
             
     }
 
@@ -103,6 +107,23 @@ public class CreateGraphFromR {
         }
         
         return nodes;
+    }
+    
+    public static List<node> getNodesFilteredByGoTerms(List<String> goTermNames){
+        List<node> filteredNodes=new ArrayList<node>();
+        List<goTerm> goTerms=new ArrayList<goTerm>();
+        
+        //Getting GoTerms from GoTermNames
+        for(String termName:goTermNames)
+            goTerms.add(goTerm.getGoTerm(termName));
+        //Populating filteredNodes with a list of all nodes
+        filteredNodes.addAll(node.allnodes);
+        
+        //Taking intersection of nodes represented by all specified goTerm categories in goTermNames
+        for(goTerm term:goTerms)
+            filteredNodes.retainAll(term.getNodes());
+        
+        return filteredNodes;
     }
     
     //WARNING: Don't call this method if you are also calling getFilteredEdges because the nodes are painted depending on whether an edge is created or not
