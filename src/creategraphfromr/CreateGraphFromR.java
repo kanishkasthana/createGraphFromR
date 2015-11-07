@@ -33,10 +33,10 @@ public class CreateGraphFromR {
             List <String>mappedGoTermLines=readLinesFromFile("5246_slimTerms.txt");
             List<goTerm> goTerms=getGenesAssociatedWithEachGoTerm(mappedGoTermLines);
             List<String> filterByGoTerms=new ArrayList<String>();
-            filterByGoTerms.add("DNA binding");
+            filterByGoTerms.add("rRNA binding");
             List<node> filteredNodes=getNodesFilteredByGoTerms(filterByGoTerms);
             
-            List <edge> edges=getEdges(rows,nodes);
+            List <edge> edges=getFilteredEdges(rows,nodes,filteredNodes);
             printGraphIn_UNICET_DL_Format(nodes,edges,"gephi_graph.dl");            
             
     }
@@ -173,7 +173,7 @@ public class CreateGraphFromR {
             if(matcher.find()){
                 String goTermName=lines.get(i).substring(matcher.end());
                 goTermStartPositions.add(i);
-                goTerm term=new goTerm(goTermName);
+                goTerm term=new goTerm(goTermName.trim());
                 goTerms.add(term);
             }
         }
@@ -196,8 +196,7 @@ public class CreateGraphFromR {
         }
         
         if(count!=goTerms.size()){
-            System.out.println("ERROR! Annotated Genes list not found for all GoTerms!");
-            throw new Error();
+            throw new Error("ERROR! Annotated Genes list not found for all GoTerms!");
         }
         return goTerms;
     }
