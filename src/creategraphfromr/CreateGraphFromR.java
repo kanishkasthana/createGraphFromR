@@ -37,14 +37,7 @@ public class CreateGraphFromR {
             List<node> filteredNodes=getNodesFilteredByGoTerms(filterByGoTerms);
             
             List <edge> edges=getEdges(rows,nodes);
-            printGraphIn_UNICET_DL_Format(nodes,edges,"gephi_graph.dl");
-            List<Integer> test1=new ArrayList<Integer>();
-            test1.add(1);test1.add(2);test1.add(3);test1.add(4);test1.add(5);
-            List<Integer> test2=new ArrayList<Integer>();
-            test2.add(4);test2.add(5);
-            test1.retainAll(test2);
-            System.out.println(test1);
-            
+            printGraphIn_UNICET_DL_Format(nodes,edges,"gephi_graph.dl");            
             
     }
 
