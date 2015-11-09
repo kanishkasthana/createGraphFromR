@@ -15,6 +15,7 @@ import java.lang.*;
  */
 public class goTerm {
     public static List<goTerm> allGoTerms=new ArrayList<goTerm>();
+    public static List<String> goTermNames=new ArrayList<String>();
     public static HashMap<String,goTerm> goTermDict=new HashMap<String,goTerm>();
     List <node>nodes=new ArrayList<node>();
     List <String>geneNames=new ArrayList<String>();
@@ -24,6 +25,7 @@ public class goTerm {
         this.goTermName=goTermName;
         allGoTerms.add(this);
         goTermDict.put(goTermName, this);
+        goTermNames.add(goTermName);
     }
     
     public List<node> getNodes(){

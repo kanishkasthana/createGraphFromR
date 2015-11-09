@@ -13,9 +13,14 @@ import java.io.*;
 import java.util.*;
 import java.lang.*;
 import java.util.regex.*;
+import javax.swing.*;
+
 
 public class GephiGraphGeneratorGUI extends javax.swing.JFrame {
-
+    
+     node[] nodes;
+     List <String> rows;
+    
     /**
      * Creates new form gephiGraphGeneratorWindow
      */
@@ -25,24 +30,21 @@ public class GephiGraphGeneratorGUI extends javax.swing.JFrame {
             
             //Reading file created from R Script in repository https://bitbucket.org/kanishkasthana/mouseneuronproject
             //Input mouse single cell neuronal gene expression data comes from: http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE60361
-            List <String>rows=readLinesFromFile("graph_output.csv");
+            rows=readLinesFromFile("graph_output.csv");
             //Creating Nodes in Gaussian Graph
-            node[] nodes=getNodes(rows);
+            nodes=getNodes(rows);
             
             //Reading File of Mapped Go terms generated from http://go.princeton.edu/cgi-bin/GOTermMapper using all genes from expression Data matrix
             List <String>mappedGoTermLines=readLinesFromFile("5246_slimTerms.txt");
             List<goTerm> goTerms=getGenesAssociatedWithEachGoTerm(mappedGoTermLines);
+            DefaultListModel listModel=new DefaultListModel();
+            for(String term: goTerm.goTermNames)
+                listModel.addElement(term);
+            GoTermSelectionList.setModel(listModel);
+            generateGraphButton.setEnabled(false);
+            this.setTitle("Gephi Graph Generator (G3): Version 0.1(Alpha) by Kanishk Asthana");
             //Running GUI to get user Input
-        
             this.setVisible(true);
-            List<String> filterByGoTerms=new ArrayList<String>();
-            filterByGoTerms.add("DNA binding");
-            List<node> filteredNodes=getNodesFilteredByGoTerms(filterByGoTerms);
-            
-            List <edge> edges=getFilteredEdges(rows,nodes,filteredNodes);
-            printGraphIn_UNICET_DL_Format(nodes,edges,"gephi_graph.dl"); 
-            System.out.println("This happens now!");
-    
     }
 
     /**
@@ -57,23 +59,25 @@ public class GephiGraphGeneratorGUI extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         GoTermSelectionList = new javax.swing.JList();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        generateGraphButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        GoTermSelectionList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
+        GoTermSelectionList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                GoTermSelectionListValueChanged(evt);
+            }
         });
         jScrollPane1.setViewportView(GoTermSelectionList);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Select Go Terms from List. Press Ctrl to Select Multiple Terms:");
 
-        jButton1.setText("Generate Graph File");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        generateGraphButton.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        generateGraphButton.setText("Generate Graph File");
+        generateGraphButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                generateGraphButtonActionPerformed(evt);
             }
         });
 
@@ -84,30 +88,40 @@ public class GephiGraphGeneratorGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addComponent(jLabel1)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1)
+                    .addComponent(generateGraphButton)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(163, 163, 163))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(jLabel1)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(generateGraphButton)
+                .addGap(135, 135, 135))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+    private void generateGraphButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateGraphButtonActionPerformed
+            List<String> filterByGoTerms=new ArrayList<String>();
+            int[] selectedIndexes=GoTermSelectionList.getSelectedIndices();
+            for(int index:selectedIndexes)
+                filterByGoTerms.add(goTerm.goTermNames.get(index));
+            List<node> filteredNodes=getNodesFilteredByGoTerms(filterByGoTerms); 
+            List <edge> edges=getFilteredEdges(rows,nodes,filteredNodes);
+            printGraphIn_UNICET_DL_Format(nodes,edges,"gephi_graph.dl"); 
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_generateGraphButtonActionPerformed
+
+    private void GoTermSelectionListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_GoTermSelectionListValueChanged
+        generateGraphButton.setEnabled(true);
+    }//GEN-LAST:event_GoTermSelectionListValueChanged
 
     /**
      * @param args the command line arguments
@@ -308,8 +322,8 @@ public class GephiGraphGeneratorGUI extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JList GoTermSelectionList;
-    private javax.swing.JButton jButton1;
+    protected javax.swing.JList GoTermSelectionList;
+    private javax.swing.JButton generateGraphButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
