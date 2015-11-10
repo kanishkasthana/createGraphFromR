@@ -35,7 +35,10 @@ public class GephiGraphGeneratorGUI extends javax.swing.JFrame {
             nodes=getNodes(rows);
             this.setTitle("Gephi Graph Generator (G3): Version 0.2(Alpha) by Kanishk Asthana");
             this.setVisible(true);
-            initializeGraphGeneration(1);
+            selectOntology.add("Molecular Function");
+            selectOntology.add("Biological Process");
+            selectOntology.add("Cellular Component");
+            GoTermSelectionList.setVisible(false);
     }
     
     public void initializeGraphGeneration(int selection){
@@ -74,7 +77,8 @@ public class GephiGraphGeneratorGUI extends javax.swing.JFrame {
         GoTermSelectionList = new javax.swing.JList();
         jLabel1 = new javax.swing.JLabel();
         generateGraphButton = new javax.swing.JButton();
-        choice1 = new java.awt.Choice();
+        selectOntology = new java.awt.Choice();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -96,6 +100,15 @@ public class GephiGraphGeneratorGUI extends javax.swing.JFrame {
             }
         });
 
+        selectOntology.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                selectOntologyItemStateChanged(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel2.setText("Select Ontology:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -104,7 +117,10 @@ public class GephiGraphGeneratorGUI extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(choice1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(selectOntology, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,8 +132,10 @@ public class GephiGraphGeneratorGUI extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(51, 51, 51)
-                .addComponent(choice1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(jLabel2)
+                .addGap(1, 1, 1)
+                .addComponent(selectOntology, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
@@ -144,6 +162,12 @@ public class GephiGraphGeneratorGUI extends javax.swing.JFrame {
     private void GoTermSelectionListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_GoTermSelectionListValueChanged
         generateGraphButton.setEnabled(true);
     }//GEN-LAST:event_GoTermSelectionListValueChanged
+
+    private void selectOntologyItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_selectOntologyItemStateChanged
+        GoTermSelectionList.setVisible(true);
+        initializeGraphGeneration(selectOntology.getSelectedIndex()+1);
+        selectOntology.setVisible(false);
+    }//GEN-LAST:event_selectOntologyItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -345,9 +369,10 @@ public class GephiGraphGeneratorGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     protected javax.swing.JList GoTermSelectionList;
-    private java.awt.Choice choice1;
     private javax.swing.JButton generateGraphButton;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private java.awt.Choice selectOntology;
     // End of variables declaration//GEN-END:variables
 }
