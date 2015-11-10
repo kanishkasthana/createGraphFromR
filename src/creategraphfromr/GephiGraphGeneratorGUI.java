@@ -33,18 +33,32 @@ public class GephiGraphGeneratorGUI extends javax.swing.JFrame {
             rows=readLinesFromFile("graph_output.csv");
             //Creating Nodes in Gaussian Graph
             nodes=getNodes(rows);
-            
+            this.setTitle("Gephi Graph Generator (G3): Version 0.2(Alpha) by Kanishk Asthana");
+            this.setVisible(true);
+            initializeGraphGeneration(1);
+    }
+    
+    public void initializeGraphGeneration(int selection){
+        String goTermFileName;
+        switch(selection){
+            case 1: goTermFileName="5246_slimTerms.txt";
+                    break;
+            case 2: goTermFileName="31851_slimTerms.txt";
+                    break;
+            case 3: goTermFileName="31885_slimTerms.txt";
+                    break;
+            default: goTermFileName="5246_slimTerms.txt";
+                
+        }
+        
             //Reading File of Mapped Go terms generated from http://go.princeton.edu/cgi-bin/GOTermMapper using all genes from expression Data matrix
-            List <String>mappedGoTermLines=readLinesFromFile("5246_slimTerms.txt");
+            List <String>mappedGoTermLines=readLinesFromFile(goTermFileName);
             List<goTerm> goTerms=getGenesAssociatedWithEachGoTerm(mappedGoTermLines);
             DefaultListModel listModel=new DefaultListModel();
             for(String term: goTerm.goTermNames)
                 listModel.addElement(term);
             GoTermSelectionList.setModel(listModel);
             generateGraphButton.setEnabled(false);
-            this.setTitle("Gephi Graph Generator (G3): Version 0.1(Alpha) by Kanishk Asthana");
-            //Running GUI to get user Input
-            this.setVisible(true);
     }
 
     /**
@@ -60,6 +74,7 @@ public class GephiGraphGeneratorGUI extends javax.swing.JFrame {
         GoTermSelectionList = new javax.swing.JList();
         jLabel1 = new javax.swing.JLabel();
         generateGraphButton = new javax.swing.JButton();
+        choice1 = new java.awt.Choice();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -88,21 +103,28 @@ public class GephiGraphGeneratorGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addComponent(generateGraphButton)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(163, 163, 163))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(choice1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addComponent(generateGraphButton)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(163, 163, 163))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(51, 51, 51)
+                .addComponent(choice1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(generateGraphButton)
-                .addGap(135, 135, 135))
+                .addGap(43, 43, 43))
         );
 
         pack();
@@ -323,6 +345,7 @@ public class GephiGraphGeneratorGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     protected javax.swing.JList GoTermSelectionList;
+    private java.awt.Choice choice1;
     private javax.swing.JButton generateGraphButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
