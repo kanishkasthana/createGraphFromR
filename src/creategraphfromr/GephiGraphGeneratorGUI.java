@@ -30,7 +30,7 @@ public class GephiGraphGeneratorGUI extends javax.swing.JFrame {
             
             //Reading file created from R Script in repository https://bitbucket.org/kanishkasthana/mouseneuronproject
             //Input mouse single cell neuronal gene expression data comes from: http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE60361
-            rows=readLinesFromFile("graph_output.csv");
+            rows=readLinesFromFile("filtered_graph_output.csv");
             //Creating Nodes in Gaussian Graph
             nodes=getNodes(rows);
             this.setTitle("Gephi Graph Generator (G3): Version 0.2(Alpha) by Kanishk Asthana");
@@ -347,7 +347,7 @@ public class GephiGraphGeneratorGUI extends javax.swing.JFrame {
         
         //Getting goTerms and the line numbers at which they occur
         for(int i=0;i<lines.size();i++){
-            Pattern pattern = Pattern.compile("^TERM\\s");
+            Pattern pattern = Pattern.compile("^1?TERM\\s");
             Matcher matcher=pattern.matcher(lines.get(i));
             if(matcher.find()){
                 String goTermName=lines.get(i).substring(matcher.end());
