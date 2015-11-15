@@ -25,7 +25,7 @@ public class CreateGraphFromR {
         
             //Reading file created from R Script in repository https://bitbucket.org/kanishkasthana/mouseneuronproject
             //Input mouse single cell neuronal gene expression data comes from: http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE60361
-            List <String>rows=readLinesFromFile("graph_output.csv");
+            List <String>rows=readLinesFromFile("filtered_graph_output.csv");
             //Creating Nodes in Gaussian Graph
             node[] nodes=getNodes(rows);
             
