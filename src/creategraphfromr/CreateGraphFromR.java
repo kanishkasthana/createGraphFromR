@@ -35,7 +35,6 @@ public class CreateGraphFromR {
             List<String> filterByGoTerms=new ArrayList<String>();
             filterByGoTerms.add("DNA binding");
             List<node> filteredNodes=getNodesFilteredByGoTerms(filterByGoTerms);
-            
             List <edge> edges=getFilteredEdges(rows,nodes,filteredNodes);
             printGraphIn_UNICET_DL_Format(nodes,edges,"gephi_graph.dl");            
             
