@@ -39,6 +39,7 @@ public class GephiGraphGeneratorGUI extends javax.swing.JFrame {
             selectOntology.add("Biological Process");
             selectOntology.add("Cellular Component");
             GoTermSelectionList.setVisible(false);
+            GoTermSelectionList.clearSelection();
             jLabel3.setVisible(false);
             jLabel4.setVisible(true);
     }
