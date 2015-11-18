@@ -197,15 +197,24 @@ public class GephiGraphGeneratorGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_GoTermSelectionListValueChanged
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
-        // TODO add your handling code here:
+        initializeGraphGeneration(1);
+        this.jRadioButton1.setEnabled(false);
+        this.jRadioButton2.setEnabled(false);
+        this.jRadioButton3.setEnabled(false);
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
-        // TODO add your handling code here:
+        initializeGraphGeneration(2);
+        this.jRadioButton1.setEnabled(false);
+        this.jRadioButton2.setEnabled(false);
+        this.jRadioButton3.setEnabled(false);
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
     private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
-        // TODO add your handling code here:
+        initializeGraphGeneration(3);
+        this.jRadioButton1.setEnabled(false);
+        this.jRadioButton2.setEnabled(false);
+        this.jRadioButton3.setEnabled(false);
     }//GEN-LAST:event_jRadioButton3ActionPerformed
 
     /**
