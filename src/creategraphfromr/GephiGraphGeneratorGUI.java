@@ -197,6 +197,7 @@ public class GephiGraphGeneratorGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_GoTermSelectionListValueChanged
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+        
         initializeGraphGeneration(1);
         this.jRadioButton1.setEnabled(false);
         this.jRadioButton2.setEnabled(false);
@@ -204,6 +205,7 @@ public class GephiGraphGeneratorGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+        
         initializeGraphGeneration(2);
         this.jRadioButton1.setEnabled(false);
         this.jRadioButton2.setEnabled(false);
@@ -211,6 +213,7 @@ public class GephiGraphGeneratorGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
     private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
+        
         initializeGraphGeneration(3);
         this.jRadioButton1.setEnabled(false);
         this.jRadioButton2.setEnabled(false);
