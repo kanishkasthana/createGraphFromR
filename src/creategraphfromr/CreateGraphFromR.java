@@ -22,22 +22,35 @@ public class CreateGraphFromR {
      */
 
     public static void main(String[] args) {
-        
+        /*
             //Reading file created from R Script in repository https://bitbucket.org/kanishkasthana/mouseneuronproject
             //Input mouse single cell neuronal gene expression data comes from: http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE60361
             List <String>rows=readLinesFromFile("filtered_graph_output.csv");
             //Creating Nodes in Gaussian Graph
             node[] nodes=getNodes(rows);
-            
+          */  
             //Reading File of Mapped Go terms generated from http://go.princeton.edu/cgi-bin/GOTermMapper using all genes from expression Data matrix
-            List <String>mappedGoTermLines=readLinesFromFile("5246_slimTerms.txt");
+            List <String>mappedGoTermLines=readLinesFromFile("mouseGOTermAnnotationsForCommonGenes.txt");
             List<goTerm> goTerms=getGenesAssociatedWithEachGoTerm(mappedGoTermLines);
+            
+            try{
+                PrintWriter out= new PrintWriter(new FileWriter("genesAssociateWithNeurologicalProcessesGoTerm.txt"));
+                goTerm neuroLogicalProcesses= goTerm.getGoTerm("neurological system process");
+                for(String geneName:neuroLogicalProcesses.getGeneNames())
+                    out.println(geneName);
+                out.close();
+            }
+            
+            catch(Exception e){
+                e.printStackTrace();
+            }
+            /*
             List<String> filterByGoTerms=new ArrayList<String>();
             filterByGoTerms.add("DNA binding");
             List<node> filteredNodes=getNodesFilteredByGoTerms(filterByGoTerms);
             List <edge> edges=getFilteredEdges(rows,nodes,filteredNodes);
             printGraphIn_UNICET_DL_Format(nodes,edges,"gephi_graph.dl");            
-            
+            */
     }
 
     public static List<String> readLinesFromFile(String fileName){
